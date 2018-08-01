@@ -94,6 +94,8 @@ for src in range(-1, 4):
         feed = src
         temp.release()
         break
+        
+################# CAMERA PREPARATION ###################
 
 # if VideoCapture(feed) doesn't work, manually try -1, 0, 1, 2, 3 (if none of those work, 
 # the webcam's not supported!)
