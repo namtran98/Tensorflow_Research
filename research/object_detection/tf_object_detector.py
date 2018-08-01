@@ -8,6 +8,9 @@ import tensorflow as tf
 import zipfile
 import cv2
 
+# This import line prevents an annoying matplotlib backend error - this line is taken from object_detection/utils/visualization_utils.py
+import matplotlib; matplotlib.use('Agg') # pylint: disable=multiple-statements
+
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
