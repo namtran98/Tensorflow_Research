@@ -39,7 +39,7 @@ from utils import visualization_utils as vis_util
 '''
 
 # What model to download.
-MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
+MODEL_NAME = 'ssd_mobilenet_v2_coco_2018_03_29'
 MODEL_FILE = MODEL_NAME + '.tar.gz'
 DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 
@@ -47,7 +47,7 @@ DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = 'INSERT PATH TO .PBTXT LABEL FILE CORRESPONDING TO LOADED MODEL'
+PATH_TO_LABELS = './data/mscoco_label_map.pbtxt'
 
 # Change number of classes to match number in .pbtxt file
 NUM_CLASSES = 90
@@ -150,8 +150,6 @@ with detection_graph.as_default():
 
     cv2.destroyAllWindows()
     cam.release()
-
-
 
 
 'C:/Users/NTran/OneDrive - g.hmc.edu/CS Pixel/TFc NeuralNet/models/research/object_detection/data/mscoco_label_map.pbtxt'
