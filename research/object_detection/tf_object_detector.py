@@ -84,6 +84,7 @@ label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
 
+################# CAMERA PREPARATION ###################
 
 # Reads in source for cam feed
 # IF THE SYSTEM ASKS YOU TO CHOOSE A FEED SOURCE, PRESS THE ESC KEY INSTEAD
@@ -97,8 +98,6 @@ for src in range(-1, 4):
         feed = src
         temp.release()
         break
-        
-################# CAMERA PREPARATION ###################
 
 # if VideoCapture(feed) doesn't work, manually try -1, 0, 1, 2, 3 (if none of those work, 
 # the webcam's not supported!)
