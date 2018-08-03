@@ -21,9 +21,9 @@ The functions do not return a value, instead they modify the image itself.
 """
 import collections
 import functools
+import matplotlib.pyplot as plt  # pylint: disable=g-import-not-at-top
 # Set headless-friendly backend.
 #import matplotlib; matplotlib.use('Agg')  # pylint: disable=multiple-statements
-import matplotlib.pyplot as plt  # pylint: disable=g-import-not-at-top
 import numpy as np
 import PIL.Image as Image
 import PIL.ImageColor as ImageColor

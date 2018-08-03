@@ -7,6 +7,7 @@ import tarfile
 import tensorflow as tf
 import zipfile
 import cv2
+import argparse
 
 # This import line prevents an annoying matplotlib backend error - this line is taken from object_detection/utils/visualization_utils.py
 import matplotlib; matplotlib.use('Agg') # pylint: disable=multiple-statements
@@ -26,6 +27,14 @@ if tf.__version__ < '1.4.0':
 # Here are the imports from the object detection module.
 from utils import label_map_util
 from utils import visualization_utils as vis_util
+
+# Construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-s", 
+                "--source",
+                type=int, 
+	              help="optional argument for choosing a specific camera source (-1,0,1,2,3)")
+args = vars(ap.parse_args())
 
 ################# MODEL PREPARATION ###################
 
@@ -47,7 +56,7 @@ DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = './labels/mscoco_label_map.pbtxt'                           # INSERT PATH TO .PBTXT LABEL 
+PATH_TO_LABELS = './data/mscoco_label_map.pbtxt'                           # INSERT PATH TO .PBTXT LABEL 
                                                                              # FILE CORRESPONDING TO LOADED MODEL
 
 # Change number of classes to match number in .pbtxt file
@@ -88,22 +97,27 @@ category_index = label_map_util.create_category_index(categories)
 
 ################# CAMERA PREPARATION ###################
 
-# Reads in source for cam feed
-# IF THE SYSTEM ASKS YOU TO CHOOSE A FEED SOURCE, PRESS THE ESC KEY INSTEAD
-feed = 0
-for src in range(-1, 4):
-    temp = cv2.VideoCapture(src)
-    ret_val, testImg = temp.read()
-    if testImg is None:
-        pass
-    else:
-        feed = src
-        temp.release()
-        break
+# Reads in source for cam feed if specific source is passed in
+if args["source"] is not None:
+  cam = cv2.VideoCapture(args["source"]) 
 
-# if VideoCapture(feed) doesn't work, manually try -1, 0, 1, 2, 3 (if none of those work, 
-# the webcam's not supported!)
-cam = cv2.VideoCapture(feed)
+else:
+  # Reads in source for cam feed
+  # IF THE SYSTEM ASKS YOU TO CHOOSE A FEED SOURCE, PRESS THE ESC KEY INSTEAD
+  feed = 0
+  for src in range(-1, 4):
+      temp = cv2.VideoCapture(src)
+      ret_val, testImg = temp.read()
+      if testImg is None:
+          pass
+      else:
+          feed = src
+          temp.release()
+          break
+
+  # if VideoCapture(feed) doesn't work, manually try -1, 0, 1, 2, 3 (if none of those work, 
+  # the webcam's not supported!)
+  cam = cv2.VideoCapture(feed)
     
 with detection_graph.as_default():
   # Starts a Tensorflow session
